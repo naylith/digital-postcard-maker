@@ -52,6 +52,24 @@
         button:hover {
             background: #0056b3;
         }
+        .kaomoji-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center;
+        }
+        .kaomoji-button {
+            background: #e9ecef;
+            color: black;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .kaomoji-button:hover {
+            background: #ccc;
+        }
     </style>
 </head>
 <body>
@@ -63,6 +81,13 @@
             <input type="text" id="sender" placeholder="your name (⌒‿⌒)" required>
             <label for="backgroundColour">select background colour (✧ω✧):</label>
             <input type="color" id="backgroundColour" value="#fff9c4">
+            <div class="kaomoji-buttons">
+                <button type="button" class="kaomoji-button">(✿◠‿◠)</button>
+                <button type="button" class="kaomoji-button">(⌒‿⌒)</button>
+                <button type="button" class="kaomoji-button">(≧◡≦)</button>
+                <button type="button" class="kaomoji-button">(｡♥‿♥｡)</button>
+                <button type="button" class="kaomoji-button">(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧</button>
+            </div>
             <button type="submit">generate postcard (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧</button>
         </form>
         <div id="postcardPreview" class="postcard-preview">
@@ -73,6 +98,7 @@
     <script>
         const form = document.getElementById('postcardForm');
         const preview = document.getElementById('postcardPreview');
+        const messageInput = document.getElementById('message');
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -87,6 +113,17 @@
                 <p>${message}</p>
                 <p><strong>- ${sender} (❀◕‿◕❀)</strong></p>
             `;
+        });
+
+        // Add kaomoji button functionality
+        const kaomojiButtons = document.querySelectorAll('.kaomoji-button');
+
+        kaomojiButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const kaomoji = button.textContent;
+                messageInput.value += ` ${kaomoji}`;
+                messageInput.focus();
+            });
         });
     </script>
 </body>
