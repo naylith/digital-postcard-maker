@@ -101,6 +101,11 @@
             background: #fff9c4;
             border-radius: 5px;
             width: 300px;
+            position: relative;
+        }
+        .save-button {
+            margin-top: 10px;
+            text-align: center;
         }
         h1 {
             text-align: center;
@@ -148,11 +153,17 @@
                 </div>
             </form>
         </div>
-        <div id="postcardPreview" class="postcard-preview">
-            <p>fill in the form to see your postcard here!</p>
+        <div>
+            <div id="postcardPreview" class="postcard-preview">
+                <p>fill in the form to see your postcard here!</p>
+            </div>
+            <div class="save-button">
+                <button id="saveAsImage">save as image</button>
+            </div>
         </div>
     </section>
 
+    <script src="https://cdn.jsdelivr.net/npm/html-to-image/dist/html-to-image.min.js"></script>
     <script>
         const form = document.getElementById('postcardForm');
         const preview = document.getElementById('postcardPreview');
@@ -206,6 +217,21 @@
 
         // Load data on page load
         window.addEventListener('load', loadFormData);
+
+        // Save postcard as image
+        const saveAsImageButton = document.getElementById('saveAsImage');
+        saveAsImageButton.addEventListener('click', () => {
+            htmlToImage.toPng(preview)
+                .then((dataUrl) => {
+                    const link = document.createElement('a');
+                    link.download = 'postcard.png';
+                    link.href = dataUrl;
+                    link.click();
+                })
+                .catch((error) => {
+                    console.error('Oops, something went wrong!', error);
+                });
+        });
     </script>
 </body>
 </html>
