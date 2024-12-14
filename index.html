@@ -158,8 +158,27 @@
         const preview = document.getElementById('postcardPreview');
         const messageInput = document.getElementById('message');
 
+        // Save form data to localStorage
+        const saveFormData = () => {
+            localStorage.setItem('recipient', document.getElementById('recipient').value);
+            localStorage.setItem('message', document.getElementById('message').value);
+            localStorage.setItem('sender', document.getElementById('sender').value);
+            localStorage.setItem('backgroundColour', document.getElementById('backgroundColour').value);
+            localStorage.setItem('textColour', document.getElementById('textColour').value);
+        };
+
+        // Load form data from localStorage
+        const loadFormData = () => {
+            document.getElementById('recipient').value = localStorage.getItem('recipient') || '';
+            document.getElementById('message').value = localStorage.getItem('message') || '';
+            document.getElementById('sender').value = localStorage.getItem('sender') || '';
+            document.getElementById('backgroundColour').value = localStorage.getItem('backgroundColour') || '#fff9c4';
+            document.getElementById('textColour').value = localStorage.getItem('textColour') || '#000000';
+        };
+
         form.addEventListener('submit', (e) => {
             e.preventDefault();
+            saveFormData();
             const recipient = document.getElementById('recipient').value;
             const message = document.getElementById('message').value;
             const sender = document.getElementById('sender').value;
@@ -181,8 +200,12 @@
                 const kaomoji = button.textContent;
                 messageInput.value += ` ${kaomoji}`;
                 messageInput.focus();
+                saveFormData();
             });
         });
+
+        // Load data on page load
+        window.addEventListener('load', loadFormData);
     </script>
 </body>
 </html>
